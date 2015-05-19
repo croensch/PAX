@@ -18,15 +18,15 @@ class Native extends AbstractTransport
         if ($this->_soapClient === null) {
             $this->_soapClient = new \SoapClient(null, $this->_options);
         }
-        $this->_soapClient;
+        return $this->_soapClient;
     }
 
     public function send($request, $location, $action, $version, $one_way = null)
     {
         if ($one_way == null) {
-            return call_user_func(array($this->_soapClient, 'SoapClient::__doRequest'), $request, $location, $action, $version);
+            return call_user_func(array($this->getSoapClient(), 'SoapClient::__doRequest'), $request, $location, $action, $version);
         } else {
-            return call_user_func(array($this->_soapClient, 'SoapClient::__doRequest'), $request, $location, $action, $version, $one_way);
+            return call_user_func(array($this->getSoapClient(), 'SoapClient::__doRequest'), $request, $location, $action, $version, $one_way);
         }
     }
 }

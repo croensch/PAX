@@ -2,17 +2,18 @@
 
 namespace PAX\Soap\Client\Protocol;
 
-use PAX\Soap\Client\Protocol\AbstractProtocol;
-use PAX\Soap\Client\Protocol\Native;
 use PAX\Soap\Client\Transport;
 
 class Native extends AbstractProtocol
 {
     protected $_soapClient;
 
-    public function __construct($options)
+    public function setTransport(Transport $transport)
     {
-        parent::__construct($options);
+        if ($transport instanceof Transport\Native) {
+            $transport->setSoapClient($this->getSoapClient());
+        }
+        $this->_transport = $transport;
     }
 
     public function getTransport()
@@ -27,24 +28,30 @@ class Native extends AbstractProtocol
     public function setSoapClient(\SoapClient $soapClient)
     {
         $this->_soapClient = $soapClient;
+        if ($this->getTransport() instanceof Transport\Native) {
+            $this->getTransport()->setSoapClient($soapClient);
+        }
     }
 
     public function getSoapClient()
     {
         if ($this->_soapClient === null) {
             $this->_soapClient = new Native\SoapClient(null, $this->_options);
-            $this->_soapClient->setCallBack(array($this, '__callBack'));
+            $this->_soapClient->setProtocol($this);
         }
         return $this->_soapClient;
     }
 
     public function call($name, $args)
     {
-        return $this->_soapClient->__call($name, $args);
+        return $this->getSoapClient()->__call($name, $args);
     }
 
-    public function __callBack($request, $location, $action, $version, $one_way = null)
+    /**
+     * @internal
+     */
+    public function send($request, $location, $action, $version, $one_way = null)
     {
-        return $this->_transport->send($request, $location, $action, $version, $one_way);
+        return $this->getTransport()->send($request, $location, $action, $version, $one_way);
     }
 }

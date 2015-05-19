@@ -2,17 +2,27 @@
 
 namespace PAX\Soap\Client\Protocol\Native;
 
+use PAX\Soap\Client\Protocol;
+
 class SoapClient extends \SoapClient
 {
-    protected $_callBack;
+    protected $_protocol;
 
-    public function setCallBack($callBack)
+    public function setProtocol(Protocol\Native $protocol)
     {
-        $this->_callBack = $callBack;
+        $this->_protocol = $protocol;
+    }
+
+    public function getProtocol()
+    {
+        if ($this->_protocol === null) {
+            throw new \Exception('protocol');
+        }
+        return $this->_protocol;
     }
 
     public function __doRequest($request, $location, $action, $version, $one_way = null)
     {
-        return call_user_func($this->_callBack, $request, $location, $action, $version, $one_way);
+        return $this->getProtocol()->send($request, $location, $action, $version, $one_way);
     }
 }
