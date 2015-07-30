@@ -1,9 +1,10 @@
 <?php
+
 namespace PAX\Dom\Codec\Schema\AnySimpleType;
 
 use PAX\Dom\Codec\Schema\AnySimpleType;
 
-class Integer extends String implements AnySimpleType, Codec
+class Integer extends AnySimpleType
 {
     public function decode(\DOMNode $node)
     {

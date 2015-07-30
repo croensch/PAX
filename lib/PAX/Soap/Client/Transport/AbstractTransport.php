@@ -20,4 +20,9 @@ abstract class AbstractTransport implements Transport
             $options
         );
     }
+
+    public function getOptions()
+    {
+        return $this->_options;
+    }
 }

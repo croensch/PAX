@@ -2,6 +2,8 @@
 
 namespace PAX\Soap\Server\Protocol;
 
+use PAX\Soap\Server\Protocol;
+
 abstract class AbstractProtocol implements Protocol
 {
     protected $_options = array();

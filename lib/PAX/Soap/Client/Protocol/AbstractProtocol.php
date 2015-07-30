@@ -23,6 +23,11 @@ abstract class AbstractProtocol implements Protocol
         );
     }
 
+    public function getOptions()
+    {
+        return $this->_options;
+    }
+
     public function setTransport(Transport $transport)
     {
         $this->_transport = $transport;

@@ -1,15 +1,16 @@
 <?php
+
 namespace PAX\Dom\Codec\Schema\AnySimpleType;
 
 use PAX\Dom\Codec\Schema\AnySimpleType;
 
-class Boolean extends String implements AnySimpleType, Codec
+class Boolean extends AnySimpleType
 {
     const TRUE_STR  = 'true';
     const TRUE_NUM  = '1';
     const FALSE_STR = 'false';
     const FALSE_NUM = '0';
-    
+
     public function encode($data, \DOMDocument $document)
     {
         if ($data === true) {
@@ -24,7 +25,7 @@ class Boolean extends String implements AnySimpleType, Codec
             $data = null;
         }
 
-        return $document->createTextNode($data);
+        return parent::encode($data);
     }
 
     public function decode(\DOMNode $node)

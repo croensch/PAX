@@ -4,9 +4,8 @@ namespace PAX\Dom\Codec\Schema;
 
 use PAX\Dom\Codec;
 
-class Element extends \Hgs_Dom_Schema_Element implements Codec
+class Element /*extends \Hgs_Dom_Schema_Element*/ implements Codec
 {
-    use SchemaTrait;
     use TypeTrait;
 
     public function encode($data, \DOMDocument $document)
@@ -25,8 +24,12 @@ class Element extends \Hgs_Dom_Schema_Element implements Codec
         return $node;
     }
 
-    public function decode(\DOMElement $node)
+    public function decode(\DOMNode $node)
     {
+        if (!($node instanceof \DOMAttribute)) {
+            throw new \InvalidArgumentException('node', 1);
+        }
+
         if ($this->nillable && $node->getAttribute('xsi:nil') === "true") { // @todo NS
             return null;
         }

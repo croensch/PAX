@@ -4,6 +4,6 @@ namespace PAX\Dom;
 
 use PAX\Dom\Codec;
 
-class Document extends DOMDocument
+class Document extends \DOMDocument
 {
 }

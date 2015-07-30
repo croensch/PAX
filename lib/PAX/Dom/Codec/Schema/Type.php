@@ -7,6 +7,11 @@ namespace PAX\Dom\Codec\Schema;
  */
 abstract class Type
 {
+    const BOOLEAN = 'boolean';
+    const FLOAT   = 'float';
+    const INTEGER = 'integer';
+    const STRING  = 'string';
+
     /**
      * @param mixed  $data
      * @param string $type
@@ -25,11 +30,8 @@ abstract class Type
     public static function decode($data, $type)
     {
         switch ($type) {
-            /* STRINGS */
-            case 'string':
-                return (string) $data;
             /* BOOLEANS */
-            case 'boolean':
+            case static::BOOLEAN:
                 switch ($data) {
                     case 1:
                     case 'true':
@@ -40,18 +42,21 @@ abstract class Type
                     default:
                         return (boolean) $data;
                 }
+            /* FLOATS */
+            case 'double':
+            case static::FLOAT:
+                return (float) $data;
             /* INTEGERS */
             case 'int':
-            case 'integer':
+            case static::INTEGER:
             case 'decimal':
             case 'long':
             case 'short':
             case 'byte':
                 return (integer) $data;
-            /* FLOATS */
-            case 'float':
-            case 'double':
-                return (float) $data;
+            /* STRINGS */
+            case static::STRING:
+                return (string) $data;
             default:
                 return $data;
         }

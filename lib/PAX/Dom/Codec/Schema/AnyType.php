@@ -1,7 +1,6 @@
 <?php
-namespace PAX\Dom\Codec\Schema;
 
-use PAX\Dom\Codec;
+namespace PAX\Dom\Codec\Schema;
 
 interface AnyType
 {

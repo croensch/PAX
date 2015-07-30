@@ -6,7 +6,7 @@ use PAX\DOM\Document;
 use PAX\Dom\Codec;
 use PAX\Dom\Codec\Element;
 
-class Schema extends \Hgs_Dom_Schema implements Codec
+class Schema /*extends \Hgs_Dom_Schema*/ implements Codec
 {
     /**
      * @var \DOMDocument
@@ -70,20 +70,26 @@ class Schema extends \Hgs_Dom_Schema implements Codec
         return $element;
     }
 
-    public function encode($data, $elementName = null)
+    public function encode($data, \DOMDocument $document, $elementName = null)
     {
         if (!($element = $this->_getRootElement($elementName))) {
             return;
         }
 
-        $node = $element->encode($data, $this->getDom());
-        $this->getDom()->appendChild($node);
+        $node = $element->encode($data, $document);
+        $document->appendChild($node);
     }
 
-    public function decode($elementName = null)
+    public function decode(\DOMNode $node, $elementName = null)
     {
         if (!($element = $this->_getRootElement($elementName))) {
             return;
+        }
+
+        if ($node instanceof \DOMElement) {
+            if ($node->nodeName === $element->name) {
+                return $element->decode($node);
+            }
         }
 
         foreach ($this->getDom()->childNodes as $node) {

@@ -78,17 +78,15 @@ class Wsdl implements Codec
         return $this->_wsdlSchemaCodec;
     }
 
-    public function encode($data)
+    public function encode($data, \DOMDocument $document)
     {
         // @todo ...
-        $this->_getWsdlSchemaCodec()->encode($data);
-        $this->setDom($this->_getWsdlSchemaCodec()->getDom());
+        $this->_getWsdlSchemaCodec()->encode($data, $document);
     }
 
-    public function decode()
+    public function decode(\DOMNode $node)
     {
         // @todo ...
-        $this->_getWsdlSchemaCodec()->setDom($this->getDom());
-        return $this->_getWsdlSchemaCodec()->decode();
+        return $this->_getWsdlSchemaCodec()->decode($node);
     }
 }

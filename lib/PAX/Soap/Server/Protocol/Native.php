@@ -5,10 +5,10 @@
 
 namespace PAX\Soap\Server\Protocol;
 
-use PAX\Soap\Server\Protocol as ServerProtocol;
+use PAX\Soap\Server\Protocol\AbstractProtocol;
 use PAX\Soap\Server\Service;
 
-class Native extends ServerProtocol
+class Native extends AbstractProtocol
 {
     protected $_soapServer;
 
@@ -36,6 +36,6 @@ class Native extends ServerProtocol
 
     public function handle($request)
     {
-        $this->_soapServer->handle($request);
+        $this->getSoapServer()->handle($request);
     }
 }

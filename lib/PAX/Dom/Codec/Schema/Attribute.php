@@ -4,9 +4,8 @@ namespace PAX\Dom\Codec\Schema;
 
 use PAX\Dom\Codec;
 
-class Attribute extends \Hgs_Dom_Schema_Attribute implements Codec
+class Attribute /*extends \Hgs_Dom_Schema_Attribute*/ implements Codec
 {
-    use SchemaTrait;
     use TypeTrait;
 
     public function encode($data, \DOMDocument $document)
@@ -20,7 +19,7 @@ class Attribute extends \Hgs_Dom_Schema_Attribute implements Codec
         return $node;
     }
 
-    public function decode(\DOMAttribute $node)
+    public function decode(\DOMNode $node)
     {
         if ($type = $this->_getType()) {
             return $type->decode($node);

@@ -1,19 +1,12 @@
 <?php
 namespace PAX\Dom\Codec\Schema;
 
-use PAX\Dom\Codec\Schema\SimpleType;
-
 /**
  * LEGENDARY
  */
 trait TypeTrait
 {
     use SchemaTrait;
-
-    const TYPE_BOOLEAN = 'boolean';
-    const TYPE_FLOAT   = 'float';
-    const TYPE_INTEGER = 'integer';
-    const TYPE_STRING  = 'string';
 
     protected static $_types;
 
@@ -32,18 +25,18 @@ trait TypeTrait
         }
 
         if (is_string($type)) {
-            if ($complexType = $this->_getSchema()->getComplexType($type)) {
+            if ($complexType = $this->getSchema()->getComplexType($type)) {
                 return $complexType;
             }
-            if ($simpleType = $this->_getSchema()->getSimpleType($type)) {
+            /*if ($simpleType = $this->getSchema()->getSimpleType($type)) {
                 return $simpleType;
-            }
+            }*/
             if (self::$_types === null) {
                 self::$_types = array(
-                    self::TYPE_BOOLEAN => new AnySimpleType\Boolean,
-                    self::TYPE_INTEGER => new AnySimpleType\Integer,
-                    self::TYPE_FLOAT   => new AnySimpleType\Float,
-                    self::TYPE_STRING  => new AnySimpleType\String,
+                    'boolean' => new AnySimpleType\Boolean,
+                    'float'   => new AnySimpleType\Float,
+                    'integer' => new AnySimpleType\Integer,
+                    'string'  => new AnySimpleType\String
                 );
             }
             if (isset(self::$_types[$type])) {
@@ -52,11 +45,11 @@ trait TypeTrait
             switch ($type) {
                 /* BOOLEANS */
                 case 'boolean':
-                    return self::$_types[$type] = self::$types[self::TYPE_BOOLEAN];
+                    return self::$_types[$type] = self::$types['boolean'];
                 /* FLOATS */
                 case 'float':
                 case 'double':
-                    return self::$_types[$type] = self::$types[self::TYPE_FLOAT];
+                    return self::$_types[$type] = self::$types['float'];
                 /* INTEGERS */
                 case 'int':
                 case 'integer':
@@ -64,10 +57,10 @@ trait TypeTrait
                 case 'long':
                 case 'short':
                 case 'byte':
-                    return self::$_types[$type] = self::$types[self::TYPE_INTEGER];
+                    return self::$_types[$type] = self::$types['integer'];
                 /* STRINGS */
                 case 'string':
-                    return self::$_types[$type] = self::$types[self::TYPE_STRING];
+                    return self::$_types[$type] = self::$types['string'];
                 default:
                     return null;
             }

@@ -6,7 +6,6 @@ use PAX\Dom\Codec;
 
 class SimpleType /*extends \Hgs_Dom_Schema_SimpleType*/ implements Codec
 {
-    use SchemaTrait;
     use TypeTrait;
 
     public function encode($data, \DOMDocument $document)

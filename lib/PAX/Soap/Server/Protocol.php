@@ -8,5 +8,5 @@ interface Protocol
 
     public function getService();
 
-    abstract public function handle($request);
+    public function handle($request);
 }

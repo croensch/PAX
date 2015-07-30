@@ -2,14 +2,14 @@
 
 namespace PAX\Soap\Server\Protocol;
 
-use PAX\Soap\Server\Protocol as ServerProtocol;
+use PAX\Soap\Server\Protocol\AbstractProtocol;
 use PAX\Soap\Server\Service;
 
-class Dom extends ServerProtocol
+class Dom extends AbstractProtocol
 {
     protected $_dom;
 
-    public function hande($request)
+    public function handle($request)
     {
         $request = $this->_dom->decode($request);
         $args = $request['Envelope']['Body'];
