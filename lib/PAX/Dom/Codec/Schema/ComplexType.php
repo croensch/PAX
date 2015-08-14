@@ -4,7 +4,7 @@ namespace PAX\Dom\Codec\Schema;
 
 use PAX\Dom\Codec;
 
-class ComplexType extends \Hgs_Dom_Schema_ComplexType implements Codec
+class ComplexType /*extends \Hgs_Dom_Schema_ComplexType*/ implements Codec
 {
     public function encode($data, \DOMDocument $document)
     {
@@ -85,7 +85,7 @@ class ComplexType extends \Hgs_Dom_Schema_ComplexType implements Codec
 
         if (isset($choices)) {
             // @TODO where is this really coming from now?
-            $classmap = $this->_getSchema()->getClassmap();
+            $classmap = $this->getSchema()->getClassmap();
             // @todo implement multiple choices
             $choice = $choices[0];
             // @todo implement object choices
@@ -179,5 +179,9 @@ class ComplexType extends \Hgs_Dom_Schema_ComplexType implements Codec
         }
 
         return $node;
+    }
+
+    public function decode(\DOMNode $node)
+    {
     }
 }
