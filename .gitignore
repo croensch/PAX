@@ -1,4 +1,8 @@
 .buildpath
 .project
 .settings
+build/*
 vendor/*
+
+lib/Hgs
+tests/Hgs
